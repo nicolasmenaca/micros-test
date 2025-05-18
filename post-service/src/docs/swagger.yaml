@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  title: Post Service API
+  version: 1.0.0
+
+paths:
+  /api/posts:
+    post:
+      summary: Crear una publicación
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostInput'
+      responses:
+        '201':
+          description: Publicación creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+    get:
+      summary: Obtener todas las publicaciones
+      responses:
+        '200':
+          description: Lista de publicaciones
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+
+  /api/posts/{id}:
+    get:
+      summary: Obtener una publicación por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Publicación encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          description: Publicación no encontrada
+
+    delete:
+      summary: Eliminar una publicación
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Publicación eliminada
+
+  /api/likes:
+    post:
+      summary: Dar like a una publicación
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LikeInput'
+      responses:
+        '201':
+          description: Like registrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Like'
+        '400':
+          description: Ya ha dado like
+
+  /api/likes/{postId}:
+    get:
+      summary: Obtener cantidad de likes por publicación
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Total de likes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  likes:
+                    type: integer
+
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        content:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    PostInput:
+      type: object
+      required:
+        - userId
+        - content
+      properties:
+        userId:
+          type: integer
+        content:
+          type: string
+          example: Este es mi primer post.
+
+    Like:
+      type: object
+      properties:
+        id:
+          type: integer
+        postId:
+          type: integer
+        userId:
+          type: integer
+
+    LikeInput:
+      type: object
+      required:
+        - postId
+        - userId
+      properties:
+        postId:
+          type: integer
+        userId:
+          type: integer
