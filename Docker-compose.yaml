@@ -1,0 +1,78 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: red_social
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: passwordauth
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      JWT_SECRET: clave123
+    networks:
+      - backend
+    depends_on:
+      - postgres
+
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    container_name: user-service
+    ports:
+      - "3002:3002"
+    environment:
+      PORT: 3002
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: auth_user
+      DB_PASSWORD: passwordauth
+      DB_NAME: red_social
+      JWT_SECRET: clave123
+    networks:
+      - backend
+    depends_on:
+      - postgres
+
+  post-service:
+    build:
+      context: ./post-service
+      dockerfile: Dockerfile
+    container_name: post-service
+    ports:
+      - "3003:3003"
+    environment:
+      PORT: 3003
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: auth_user
+      DB_PASSWORD: passwordauth
+      DB_NAME: red_social
+      JWT_SECRET: clave123
+    networks:
+      - backend
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+
+networks:
+  backend:
+    driver: bridge
