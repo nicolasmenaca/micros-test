@@ -25,12 +25,12 @@ AppDataSource.initialize()
     .then(() => {
         app.use("/api", initPostRoutes(AppDataSource));
 
-        app.listen(PORT, () => {
+        app.listen(PORT, '0.0.0.0', () => {
             console.log(`Post service running on port ${PORT}`);
             console.log(`Swagger docs available at http://localhost:${PORT}/api/docs`);
         });
     })
     .catch((error) => {
         console.error("Error al conectar a la base de datos", error);
-        process.exit(1); 
+        process.exit(1);
     });
