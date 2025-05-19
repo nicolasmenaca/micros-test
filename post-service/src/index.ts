@@ -22,7 +22,7 @@ const PORT = process.env.PORT ? Number(process.env.PORT) : 3002;
 
 AppDataSource.initialize()
     .then(() => {
-        app.use("/api", initPostRoutes);
+        app.use("/api", initPostRoutes(AppDataSource));
         app.listen(PORT, '0.0.0.0', () => {
             console.log(`Post service running on port ${PORT}`);
             console.log(`Swagger docs available at http://localhost:${PORT}/api/docs`);
