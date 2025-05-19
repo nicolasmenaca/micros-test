@@ -36,9 +36,9 @@ services:
       dockerfile: Dockerfile
     container_name: user-service
     ports:
-      - "3002:3002"
+      - "3003:3003"
     environment:
-      PORT: 3002
+      PORT: 3003
       DB_HOST: postgres
       DB_PORT: 5432
       DB_USER: auth_user
@@ -56,9 +56,9 @@ services:
       dockerfile: Dockerfile
     container_name: post-service
     ports:
-      - "3003:3003"
+      - "3002:3002"
     environment:
-      PORT: 3003
+      PORT: 3002
       DB_HOST: postgres
       DB_PORT: 5432
       DB_USER: auth_user
