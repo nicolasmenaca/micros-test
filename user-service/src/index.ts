@@ -14,8 +14,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const swaggerPath = path.join(__dirname, "docs", "swagger.yaml");
-const swaggerDocument = YAML.load(swaggerPath);
+const swaggerDocument = YAML.load(path.join(__dirname, "..", "src", "docs", "swagger.yaml"));
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3002;
