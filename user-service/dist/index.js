@@ -16,8 +16,7 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-const swaggerPath = path_1.default.join(__dirname, "docs", "swagger.yaml");
-const swaggerDocument = yamljs_1.default.load(swaggerPath);
+const swaggerDocument = yamljs_1.default.load(path_1.default.join(__dirname, "..", "src", "docs", "swagger.yaml"));
 app.use("/api/docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3002;
 data_source_1.AppDataSource.initialize()

@@ -23,12 +23,12 @@ console.log("Variables de entorno cargadas:", {
 });
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-const swaggerDocument = yamljs_1.default.load(path_1.default.join(__dirname, "docs", "swagger.yaml"));
+const swaggerDocument = yamljs_1.default.load(path_1.default.join(__dirname, "..", "src", "docs", "swagger.yaml"));
 app.use("/api/docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));
 app.use((0, cors_1.default)());
 app.use("/api", auth_routes_1.default);
 const PORT = Number(process.env.PORT) || 3001;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Auth service running on port ${PORT}`);
     console.log(`Swagger docs available at http://localhost:${PORT}/api/docs`);
 });
