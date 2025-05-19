@@ -1,12 +1,19 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 class UserService {
     constructor(userRepo) {
         this.userRepo = userRepo;
     }
-    createUser(data) {
-        const user = this.userRepo.create(data);
+    async createUser(data) {
+        const user = this.userRepo.create({
+            ...data,
+            password: await bcryptjs_1.default.hash(data.password, 10),
+        });
         return this.userRepo.save(user);
     }
     findByEmail(email) {
@@ -18,7 +25,10 @@ class UserService {
     findAll() {
         return this.userRepo.find();
     }
-    updateUser(id, data) {
+    async updateUser(id, data) {
+        if (data.password) {
+            data.password = await bcryptjs_1.default.hash(data.password, 10);
+        }
         return this.userRepo.update(id, data);
     }
     deleteUser(id) {

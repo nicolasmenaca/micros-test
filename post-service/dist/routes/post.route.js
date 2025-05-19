@@ -19,6 +19,7 @@ function initPostRoutes(dataSource) {
     router.get("/posts/:id", postController.getById);
     router.delete("/posts/:id", postController.delete);
     router.post("/likes", likeController.like);
+    router.post("/unlike", likeController.unlike);
     router.get("/likes/:postId", likeController.count);
     return router;
 }

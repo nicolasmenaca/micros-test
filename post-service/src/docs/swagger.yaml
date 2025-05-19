@@ -83,6 +83,21 @@ paths:
         '400':
           description: Ya ha dado like
 
+  /api/likes/unlike:
+    post:
+      summary: Quitar like de una publicación
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LikeInput'
+      responses:
+        '200':
+          description: Like eliminado correctamente
+        '400':
+          description: Error al quitar like (like no existe o ya fue eliminado)
+
   /api/likes/{postId}:
     get:
       summary: Obtener cantidad de likes por publicación

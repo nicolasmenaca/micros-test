@@ -2,7 +2,7 @@ import "reflect-metadata";
 import express from "express";
 import { AppDataSource } from "./data-source";
 import userRoutes from "./routes/user.routes";
-
+import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
@@ -11,6 +11,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 const swaggerPath = path.join(__dirname, "docs", "swagger.yaml");

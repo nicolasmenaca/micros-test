@@ -12,7 +12,15 @@ export class LikeController {
       res.status(400).json({ message: e instanceof Error ? e.message : e });
     }
   };
-
+  unlike = async (req: Request, res: Response) => {
+    const { postId, userId } = req.body;
+    try {
+      await this.service.unlikePost(postId, userId);
+      res.status(200).json({ message: "Like eliminado" });
+    } catch (e) {
+      res.status(400).json({ message: e instanceof Error ? e.message : e });
+    }
+  };
   count = async (req: Request, res: Response) => {
     const count = await this.service.countLikes(Number(req.params.postId));
     res.json({ likes: count });

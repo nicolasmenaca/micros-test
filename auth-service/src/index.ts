@@ -4,7 +4,7 @@ import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
 import fs from "fs";
-
+import cors from "cors";
 import authRoutes from "./routes/auth.routes";
 
 const envPath = path.resolve(process.cwd(), ".env");
@@ -24,7 +24,7 @@ app.use(express.json());
 
 const swaggerDocument = YAML.load(path.join(__dirname, "docs", "swagger.yaml"));
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
+app.use(cors());
 app.use("/api", authRoutes);
 
 const PORT = Number(process.env.PORT) || 3001;
