@@ -7,7 +7,6 @@ COPY package*.json ./
 
 RUN npm install
 
-RUN mkdir -p dist/docs && cp src/docs/swagger.yaml dist/docs/
 
 COPY . .
 

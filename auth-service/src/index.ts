@@ -22,7 +22,7 @@ console.log("Variables de entorno cargadas:", {
 const app = express();
 app.use(express.json());
 
-const swaggerDocument = YAML.load(path.join(__dirname, "docs", "swagger.yaml"));
+const swaggerDocument = YAML.load(path.join(__dirname, "..", "src", "docs", "swagger.yaml"));
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(cors());
 app.use("/api", authRoutes);
